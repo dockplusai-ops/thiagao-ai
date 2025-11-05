@@ -31,6 +31,7 @@ src/
     Portfolio.jsx    # Portfolio projects grid
     Ventures.jsx     # Business ventures grid
     Contact.jsx      # Contact form with validation
+    Terminal.jsx     # Animated terminal component
   App.jsx            # Main app component
   main.jsx           # React entry point
   index.css          # Tailwind CSS imports
@@ -42,8 +43,36 @@ src/
 - **Vite** - Build tool
 - **Tailwind CSS** - Styling
 - **Lucide React** - Icons
+- **JetBrains Mono** - Terminal font
 
-## 🌐 Deployment
+## 🐳 Docker Deployment
+
+### Build and Run with Docker
+
+```bash
+# Build the Docker image
+docker build -t thiagao-ai .
+
+# Run the container
+docker run -p 3000:80 thiagao-ai
+```
+
+### Using Docker Compose
+
+```bash
+# Build and start
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
+```
+
+The application will be available at `http://localhost:3000`
+
+## 🌐 Other Deployment Options
 
 ### Vercel (Recommended)
 
@@ -70,6 +99,19 @@ src/
    - Build command: `npm run build`
    - Publish directory: `dist`
 
+## 📝 Git Setup
+
+```bash
+# Initialize repository (if not already done)
+git init
+
+# Add remote repository
+git remote add origin <YOUR_REPO_URL>
+
+# Push to repository
+git push -u origin main
+```
+
 ## ✅ Pre-Deployment Checklist
 
 - [x] Smooth scroll navigation working
@@ -78,6 +120,8 @@ src/
 - [x] Form validation working
 - [x] SEO meta tags added
 - [x] Footer with copyright info
+- [x] Docker configuration ready
+- [x] Nginx configuration for production
 
 ## 🔧 Future Enhancements
 
@@ -106,6 +150,7 @@ VITE_EMAIL_SERVICE_API=your_email_service_api_key
 - ✅ Portfolio showcase
 - ✅ Business ventures overview
 - ✅ Clean, modern UI
+- ✅ Docker-ready for production deployment
 
 ## 📄 License
 
