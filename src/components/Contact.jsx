@@ -10,13 +10,53 @@ function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Name is required'
+    } else if (formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Name must be at least 2 characters'
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required'
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+    
     setIsSubmitting(true)
+    // TODO: Integrate with email service (EmailJS, Formspree, etc.)
     setTimeout(() => {
       setIsSubmitting(false)
       setIsSuccess(true)
+      // Reset form after success
+      setFormData({ fullName: '', email: '', projectType: '', message: '' })
+      setErrors({})
     }, 1500)
   }
 
@@ -50,46 +90,110 @@ function Contact() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+            <form onSubmit={handleSubmit} className="space-y-8 relative z-10" noValidate>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="font-pixel text-[10px] text-blue-400 block tracking-widest">IDENTIFIER_NAME</label>
+                  <label 
+                    htmlFor="fullName"
+                    className="font-pixel text-[10px] text-blue-400 block tracking-widest"
+                  >
+                    IDENTIFIER_NAME
+                  </label>
                   <input
+                    id="fullName"
                     type="text"
                     required
-                    className="w-full bg-black border-2 border-slate-800 text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors"
+                    value={formData.fullName}
+                    className={`w-full bg-black border-2 ${
+                      errors.fullName ? 'border-red-500' : 'border-slate-800'
+                    } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
                     placeholder="ENTER_NAME"
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, fullName: e.target.value })
+                      if (errors.fullName) {
+                        setErrors({ ...errors, fullName: '' })
+                      }
+                    }}
+                    aria-invalid={errors.fullName ? 'true' : 'false'}
+                    aria-describedby={errors.fullName ? 'fullName-error' : undefined}
                   />
+                  {errors.fullName && (
+                    <p id="fullName-error" className="font-terminal text-red-400 text-sm" role="alert">
+                      {errors.fullName}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-3">
-                  <label className="font-pixel text-[10px] text-blue-400 block tracking-widest">COMMS_ADDRESS</label>
+                  <label 
+                    htmlFor="email"
+                    className="font-pixel text-[10px] text-blue-400 block tracking-widest"
+                  >
+                    COMMS_ADDRESS
+                  </label>
                   <input
+                    id="email"
                     type="email"
                     required
-                    className="w-full bg-black border-2 border-slate-800 text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors"
+                    value={formData.email}
+                    className={`w-full bg-black border-2 ${
+                      errors.email ? 'border-red-500' : 'border-slate-800'
+                    } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
                     placeholder="ENTER_EMAIL"
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value })
+                      if (errors.email) {
+                        setErrors({ ...errors, email: '' })
+                      }
+                    }}
+                    aria-invalid={errors.email ? 'true' : 'false'}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
                   />
+                  {errors.email && (
+                    <p id="email-error" className="font-terminal text-red-400 text-sm" role="alert">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="font-pixel text-[10px] text-blue-400 block tracking-widest">MISSION_DETAILS</label>
+                <label 
+                  htmlFor="message"
+                  className="font-pixel text-[10px] text-blue-400 block tracking-widest"
+                >
+                  MISSION_DETAILS
+                </label>
                 <textarea
+                  id="message"
                   required
                   rows={4}
-                  className="w-full bg-black border-2 border-slate-800 text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                  value={formData.message}
+                  className={`w-full bg-black border-2 ${
+                    errors.message ? 'border-red-500' : 'border-slate-800'
+                  } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors resize-none`}
                   placeholder="DESCRIBE_OBJECTIVES"
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, message: e.target.value })
+                    if (errors.message) {
+                      setErrors({ ...errors, message: '' })
+                    }
+                  }}
+                  aria-invalid={errors.message ? 'true' : 'false'}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
                 />
+                {errors.message && (
+                  <p id="message-error" className="font-terminal text-red-400 text-sm" role="alert">
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               <div className="pt-4">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-8bit w-full !py-4"
+                  className="btn-8bit w-full !py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Submit contact form"
                 >
                   {isSubmitting ? 'TRANSMITTING...' : 'SEND_SIGNAL'}
                 </button>

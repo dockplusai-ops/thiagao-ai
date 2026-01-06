@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import Terminal from './Terminal'
 
-function Hero() {
+const Hero = memo(() => {
   const photoUrl = '/assets/thiagao-hero.webp'
 
   return (
@@ -41,6 +42,7 @@ function Hero() {
                   }
                 }}
                 className="btn-8bit"
+                aria-label="Navigate to contact section"
               >
                 INITIATE_CONTACT
               </button>
@@ -49,15 +51,19 @@ function Hero() {
 
           {/* Right Side - 3D Floating Avatar */}
           <div className="relative flex justify-center items-center">
-            <div className="absolute inset-0 bg-blue-600/10 blur-[120px] rounded-full animate-pulse"></div>
+            <div className="absolute inset-0 bg-blue-600/10 blur-[120px] rounded-full animate-pulse" style={{ willChange: 'opacity' }}></div>
 
             <div className="relative preserve-3d float-3d">
               {/* Main Image Frame */}
               <div className="pixel-border-blue glow-blue overflow-hidden relative group">
                 <img
                   src={photoUrl}
-                  alt="Thiagao Ai Pixel Art"
+                  alt="Thiagao Ai - Lead Developer A.I"
                   className="w-full h-auto max-w-md object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="eager"
+                  decoding="async"
+                  width="400"
+                  height="600"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent pointer-events-none"></div>
 
@@ -81,10 +87,12 @@ function Hero() {
       </div>
 
       {/* Background Elements */}
-      <div className="absolute top-1/4 left-10 w-24 h-24 border border-blue-900/20 rotate-45 animate-spin duration-[10s]"></div>
-      <div className="absolute bottom-1/4 right-10 w-40 h-40 border-r border-b border-blue-900/20 rounded-full animate-pulse"></div>
+      <div className="absolute top-1/4 left-10 w-24 h-24 border border-blue-900/20 rotate-45 animate-spin duration-[10s]" style={{ willChange: 'transform' }}></div>
+      <div className="absolute bottom-1/4 right-10 w-40 h-40 border-r border-b border-blue-900/20 rounded-full animate-pulse" style={{ willChange: 'opacity' }}></div>
     </section>
   )
-}
+})
+
+Hero.displayName = 'Hero'
 
 export default Hero

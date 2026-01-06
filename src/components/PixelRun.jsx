@@ -25,16 +25,6 @@ const PixelRun = () => {
 
     const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.5
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                isVisible.current = entry.isIntersecting
-            },
-            { threshold: 0.1 }
-        )
-        if (containerRef.current) observer.observe(containerRef.current)
-        return () => observer.disconnect()
-    }, [])
 
     const handleJump = () => {
         if (gameOver || gameWon) {
@@ -74,7 +64,12 @@ const PixelRun = () => {
     }, [isPlaying, isJumping, gameOver, gameWon])
 
     const gameLoop = (time) => {
-        if (!isVisible.current || (!isPlaying && !gameOver && !gameWon)) {
+        if (!isVisible.current) {
+            lastTimeRef.current = undefined
+            return // Stop the loop when not visible
+        }
+        
+        if (!isPlaying && !gameOver && !gameWon) {
             lastTimeRef.current = time
             requestRef.current = requestAnimationFrame(gameLoop)
             return
@@ -149,8 +144,28 @@ const PixelRun = () => {
     }
 
     useEffect(() => {
-        requestRef.current = requestAnimationFrame(gameLoop)
-        return () => cancelAnimationFrame(requestRef.current)
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisible.current = entry.isIntersecting
+                if (entry.isIntersecting && !requestRef.current) {
+                    requestRef.current = requestAnimationFrame(gameLoop)
+                }
+            },
+            { threshold: 0.1 }
+        )
+        
+        if (containerRef.current) {
+            observer.observe(containerRef.current)
+            requestRef.current = requestAnimationFrame(gameLoop)
+        }
+        
+        return () => {
+            observer.disconnect()
+            if (requestRef.current) {
+                cancelAnimationFrame(requestRef.current)
+                requestRef.current = null
+            }
+        }
     }, [isPlaying, gameOver, gameWon, obstaclesPassed])
 
     return (
