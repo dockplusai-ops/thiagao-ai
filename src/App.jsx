@@ -1,19 +1,29 @@
+import React, { Suspense } from 'react'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
-import About from './components/About'
-import Services from './components/Services'
-import Portfolio from './components/Portfolio'
-import Contact from './components/Contact'
-import PixelRun from './components/PixelRun'
-import DockPlus from './components/DockPlus'
-import Ventures from './components/Ventures'
+
+// Lazy load sections for better initial FCP
+const About = React.lazy(() => import('./components/About'))
+const Services = React.lazy(() => import('./components/Services'))
+const Portfolio = React.lazy(() => import('./components/Portfolio'))
+const Contact = React.lazy(() => import('./components/Contact'))
+const PixelRun = React.lazy(() => import('./components/PixelRun'))
+const DockPlus = React.lazy(() => import('./components/DockPlus'))
+const Ventures = React.lazy(() => import('./components/Ventures'))
+
+// Simple loading fallback
+const SectionLoader = () => (
+  <div className="py-32 flex items-center justify-center">
+    <div className="w-8 h-8 bg-blue-500/20 animate-pulse border border-blue-500/30"></div>
+  </div>
+)
 
 function App() {
   return (
     <div className="bg-[#050508] text-[#e0e0e0] relative min-h-screen selection:bg-blue-500 selection:text-black">
-      {/* Design Layers */}
-      <div className="crt-overlay" />
-      <div id="grid-bg" />
+      {/* Design Layers - Optimized with contain: strict */}
+      <div className="crt-overlay pointer-events-none" style={{ contain: 'strict' }} />
+      <div id="grid-bg" className="pointer-events-none" style={{ contain: 'strict' }} />
 
       <Navigation />
 
@@ -22,34 +32,36 @@ function App() {
           <Hero />
         </section>
 
-        <section id="about" className="py-32">
-          <About />
-        </section>
+        <Suspense fallback={<SectionLoader />}>
+          <section id="about" className="py-32 optimize-scroll" style={{ contain: 'layout' }}>
+            <About />
+          </section>
 
-        <section id="dockplus" className="py-32 bg-slate-950/20">
-          <DockPlus />
-        </section>
+          <section id="dockplus" className="py-32 bg-slate-950/20 optimize-scroll" style={{ contain: 'layout' }}>
+            <DockPlus />
+          </section>
 
-        <section id="services" className="py-32">
-          <Services />
-        </section>
+          <section id="services" className="py-32 optimize-scroll" style={{ contain: 'layout' }}>
+            <Services />
+          </section>
 
-        <section id="ventures" className="py-32 bg-slate-950/20">
-          <Ventures />
-        </section>
+          <section id="ventures" className="py-32 bg-slate-950/20 optimize-scroll" style={{ contain: 'layout' }}>
+            <Ventures />
+          </section>
 
-        <section id="portfolio" className="py-32">
-          <Portfolio />
-        </section>
+          <section id="portfolio" className="py-32 optimize-scroll" style={{ contain: 'layout' }}>
+            <Portfolio />
+          </section>
 
-        <section id="contact" className="py-40">
-          <Contact />
-        </section>
+          <section id="contact" className="py-40 optimize-scroll" style={{ contain: 'layout' }}>
+            <Contact />
+          </section>
 
-        <PixelRun />
+          <PixelRun />
+        </Suspense>
       </main>
 
-      <footer className="border-t-4 border-blue-900/40 py-16 bg-black relative overflow-hidden mt-32">
+      <footer className="border-t-4 border-blue-900/40 py-16 bg-black relative overflow-hidden mt-32" style={{ contain: 'layout' }}>
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="font-terminal text-slate-500 text-sm order-2 md:order-1">
             [ CPU_LOAD: 0.12 ] [ MEM_STATE: STABLE ]<br />

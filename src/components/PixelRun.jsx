@@ -8,20 +8,33 @@ const PixelRun = () => {
     const [gameOver, setGameOver] = useState(false)
     const [gameWon, setGameWon] = useState(false)
 
+    const containerRef = useRef()
     const requestRef = useRef()
     const lastTimeRef = useRef()
     const velocityRef = useRef(0)
-    const playerYRef = useRef(120) // Use ref for logic, state for render
+    const playerYRef = useRef(120)
+    const isVisible = useRef(true)
 
     const [renderPlayerY, setRenderPlayerY] = useState(120)
 
-    const GRAVITY = 0.4 // Adjusted for smoother jump
-    const JUMP_FORCE = -10 // Adjusted
+    const GRAVITY = 0.4
+    const JUMP_FORCE = -10
     const GROUND_Y = 120
     const PLAYER_X = 50
-    const BASE_SPEED = 3 // SLOWER START as requested
+    const BASE_SPEED = 3
 
     const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.5
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisible.current = entry.isIntersecting
+            },
+            { threshold: 0.1 }
+        )
+        if (containerRef.current) observer.observe(containerRef.current)
+        return () => observer.disconnect()
+    }, [])
 
     const handleJump = () => {
         if (gameOver || gameWon) {
@@ -61,9 +74,14 @@ const PixelRun = () => {
     }, [isPlaying, isJumping, gameOver, gameWon])
 
     const gameLoop = (time) => {
+        if (!isVisible.current || (!isPlaying && !gameOver && !gameWon)) {
+            lastTimeRef.current = time
+            requestRef.current = requestAnimationFrame(gameLoop)
+            return
+        }
+
         if (lastTimeRef.current !== undefined) {
             if (isPlaying && !gameOver && !gameWon) {
-                // Update Player Logic
                 velocityRef.current += GRAVITY
                 playerYRef.current += velocityRef.current
 
@@ -74,7 +92,6 @@ const PixelRun = () => {
                 }
                 setRenderPlayerY(playerYRef.current)
 
-                // Update Obstacles
                 setObstacles((prev) => {
                     const next = prev.map((obs) => ({ ...obs, x: obs.x - currentSpeed }))
 
@@ -93,7 +110,6 @@ const PixelRun = () => {
                         return obs.x > -50
                     })
 
-                    // Spawn logic
                     const spawnInterval = Math.max(250, 500 - (obstaclesPassed * 3))
                     if (filtered.length === 0 || (filtered[filtered.length - 1].x < spawnInterval && Math.random() < 0.05)) {
                         if (obstaclesPassed + filtered.length < 100) {
@@ -101,7 +117,6 @@ const PixelRun = () => {
                         }
                     }
 
-                    // Collision (Small Hitbox for better feel)
                     const playerHitbox = {
                         x: PLAYER_X + 15,
                         y: playerYRef.current + 10,
@@ -140,11 +155,12 @@ const PixelRun = () => {
 
     return (
         <div
+            ref={containerRef}
             className="w-full bg-slate-900/50 border-y border-blue-500/20 py-8 relative overflow-hidden group cursor-pointer select-none"
             onMouseDown={(e) => { e.preventDefault(); handleJump(); }}
+            style={{ contain: 'layout paint' }}
         >
             <div className="max-w-7xl mx-auto px-6 relative h-40">
-                {/* UI */}
                 <div className="absolute top-0 left-6 z-20">
                     <div className="font-pixel text-[8px] text-blue-500/50 mb-1">PROTO_RUNNER_V2.1</div>
                     <div className="font-pixel text-xl text-blue-400">
@@ -181,14 +197,13 @@ const PixelRun = () => {
                     </div>
                 )}
 
-                {/* World */}
                 <div className="relative h-full w-full border-b border-blue-500/30">
                     <div className="absolute bottom-0 w-full h-px bg-blue-500/20"></div>
 
-                    {/* Character */}
                     <div
                         style={{
                             transform: `translate3d(${PLAYER_X}px, ${renderPlayerY}px, 0)`,
+                            willChange: 'transform'
                         }}
                         className="absolute"
                     >
@@ -206,11 +221,13 @@ const PixelRun = () => {
                         </div>
                     </div>
 
-                    {/* Entities */}
                     {obstacles.map((obs) => (
                         <div
                             key={obs.id}
-                            style={{ transform: `translate3d(${obs.x}px, ${GROUND_Y + 10}px, 0)` }}
+                            style={{
+                                transform: `translate3d(${obs.x}px, ${GROUND_Y + 10}px, 0)`,
+                                willChange: 'transform'
+                            }}
                             className="absolute"
                         >
                             <div className="w-8 h-8 bg-red-900/40 border border-red-500 flex items-center justify-center rotate-45">

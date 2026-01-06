@@ -49,6 +49,8 @@
   z-index: 100;
   background-size: 100% 3px, 3px 100%;
   pointer-events: none;
+  will-change: opacity;
+  backface-visibility: hidden;
 }
 
 /* 3D Transform Utilities */
@@ -185,6 +187,13 @@
   transform-origin: top;
   z-index: -1;
   mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.optimize-scroll {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }
 
 @keyframes bounce-short {

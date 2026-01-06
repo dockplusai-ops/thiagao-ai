@@ -10,5 +10,23 @@ export default defineConfig({
       targets: ['defaults', 'not IE 11'],
     }),
   ],
+  build: {
+    target: 'esnext',
+    minify: 'terser',
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom'],
+          'icons': ['lucide-react']
+        }
+      }
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  }
 })
-

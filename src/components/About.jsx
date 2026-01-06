@@ -52,7 +52,7 @@ function About() {
             <div className="absolute inset-0 bg-blue-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
             <div className="pixel-border-blue p-2 bg-slate-900 rotate-3 group-hover:rotate-0 transition-transform duration-500">
               <img
-                src="/assets/thiagao-about.jpg"
+                src="/assets/thiagao-about.webp"
                 alt="Thiagao Ai Portrait"
                 className="w-full max-w-sm grayscale contrast-125 group-hover:grayscale-0 transition-all"
               />
