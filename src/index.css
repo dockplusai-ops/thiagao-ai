@@ -1,25 +1,168 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --neon-blue: #00f2ff;
+  --neon-purple: #bc13fe;
+  --terminal-bg: #0a0a0f;
+  --crt-line: rgba(18, 16, 16, 0.1);
+}
 
 @layer base {
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
-  
+
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0a0a0a;
-    color: #ffffff;
+    @apply bg-[#050508] text-[#e0e0e0] antialiased overflow-x-hidden;
+    font-family: 'Space Mono', monospace;
+  }
+
+  h1, h2, h3, .font-pixel {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+  }
+
+  p, .font-terminal {
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
   }
 }
 
-@layer utilities {
-  .terminal-font {
-    font-family: 'JetBrains Mono', monospace;
-  }
+/* CRT Scanline Effect Overlay */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 100;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
 }
 
+/* 3D Transform Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.pixel-border {
+  @apply relative;
+  background: #000;
+  border: 4px solid #fff;
+  box-shadow: 
+    4px 0 0 0 #fff,
+    -4px 0 0 0 #fff,
+    0 4px 0 0 #fff,
+    0 -4px 0 0 #fff;
+}
+
+.pixel-border-blue {
+  border: 2px solid var(--neon-blue);
+  box-shadow: 
+    3px 0 0 0 var(--neon-blue),
+    -3px 0 0 0 var(--neon-blue),
+    0 3px 0 0 var(--neon-blue),
+    0 -3px 0 0 var(--neon-blue);
+}
+
+.glow-blue {
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+.glow-text-blue {
+  text-shadow: 0 0 8px rgba(0, 242, 255, 0.6);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050508;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a2e;
+  border: 2px solid var(--neon-blue);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-blue);
+}
+
+/* 8-bit button effect */
+.btn-8bit {
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--neon-blue);
+  color: #000;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  box-shadow: 
+    inset -4px -4px 0px 0px #00a8b3,
+    4px 4px 0px 0px #000;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+
+.btn-8bit:active {
+  box-shadow: 
+    inset 4px 4px 0px 0px #00a8b3,
+    0px 0px 0px 0px #000;
+  transform: translate(4px, 4px);
+}
+
+@keyframes float {
+  0% { transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg); }
+  50% { transform: translateZ(50px) translateY(-15px) rotateX(20deg) rotateY(-10deg); }
+  100% { transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg); }
+}
+
+.float-3d {
+  animation: float 5s ease-in-out infinite;
+}
+
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 101;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  pointer-events: none;
+  animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  80% { bottom: 100%; }
+  100% { bottom: -100px; }
+}
+
+#grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px);
+  transform-origin: top;
+  z-index: -1;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+}

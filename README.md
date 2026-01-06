@@ -1,6 +1,6 @@
 # Thiagao A.I - Enterprise AI Solutions
 
-Professional portfolio website for Thiago Roberts showcasing enterprise AI solutions, automation services, and business ventures.
+Professional portfolio website for Thiagao Ai showcasing enterprise AI solutions, automation services, and business ventures.
 
 ## 🚀 Quick Start
 

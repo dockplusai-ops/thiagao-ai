@@ -1,7 +1,7 @@
 function Ventures() {
   const ventures = [
     {
-      name: 'Roberts Landscape Construction & Design',
+      name: 'Thiagao Landscape Construction & Design',
       tagline: 'Rooted in Excellence',
       industry: 'Landscape & Hardscape',
       comingSoon: false,

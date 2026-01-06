@@ -3,94 +3,87 @@ import { ExternalLink } from 'lucide-react'
 function Portfolio() {
   const projects = [
     {
-      name: 'All Granite & Stone',
+      name: 'ALL_GRANITE_AND_STONE',
       url: 'https://allgraniteandstone.com',
-      description: 'Premium stone fabrication company website with service showcase and contact integration',
-      tech: ['Web Development', 'SEO'],
-      image: 'https://via.placeholder.com/800x450/1e293b/ffffff?text=All+Granite+%26+Stone',
+      description: 'PREMIUM_STONE_FABRICATION_INTERFACE',
+      tech: ['WEB', 'SEO'],
     },
     {
-      name: 'Cheesebread Bakery Café',
+      name: 'CHEESEBREAD_BAKERY',
       url: 'https://www.brcapecod.com',
-      description: 'Brazilian bakery-café with menu, catering services, and location information',
-      tech: ['Web Design', 'Brand Integration'],
-      image: 'https://via.placeholder.com/800x450/1e293b/ffffff?text=Cheesebread+Bakery+Café',
+      description: 'BRAZILIAN_GASTRONOMY_DIGITAL_HOME',
+      tech: ['DESIGN', 'BRAND'],
     },
     {
-      name: 'Roberts Landscape Construction',
+      name: 'THIAGAO_LANDSCAPE',
       url: 'https://roberts-ldc.com',
-      description: 'Landscape and hardscape company showcasing premium outdoor projects',
-      tech: ['Portfolio Site', 'Visual Design'],
-      image: 'https://via.placeholder.com/800x450/1e293b/ffffff?text=Roberts+Landscape+Construction',
+      description: 'OUTDOOR_ARCHITECTURAL_SHOWCASE',
+      tech: ['FULLSTACK', 'VISUAL'],
     },
   ]
 
   return (
-    <div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold text-white mb-4">Selected Work</h2>
-          <p className="text-xl text-slate-400">
-            Websites and digital solutions delivered
-          </p>
+    <div className="section-container relative z-10">
+      <div className="flex justify-between items-end mb-16 border-b-2 border-blue-900/40 pb-8">
+        <div>
+          <h2 className="text-3xl font-pixel text-white mb-2 glow-text-blue">WORK_ARCHIVE</h2>
+          <p className="font-terminal text-xl text-slate-400">SELECT_SUCCESSFUL_DEPLOYMENTS</p>
         </div>
+        <div className="hidden md:block font-terminal text-blue-500/50 text-right">
+          STORAGE: 74% FULL<br />
+          SECTOR: 0x82A
+        </div>
+      </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.name}
-              className="bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors overflow-hidden"
-            >
-              {/* Screenshot */}
-              <div className="aspect-video bg-slate-800 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  className="w-full h-full object-cover"
-                />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((project, index) => (
+          <div
+            key={project.name}
+            className="group pixel-border bg-slate-950 border-slate-700 hover:border-blue-500 transition-colors"
+          >
+            {/* Visual Placeholder for high-end look */}
+            <div className="aspect-video bg-blue-900/20 relative overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="font-pixel text-[8px] text-blue-500/30">PREVIEW_NOT_AVAILABLE</div>
               </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-white font-semibold text-xl mb-2">
-                  {project.name}
-                </h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                  {project.description}
-                </p>
-
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Visit Site Button */}
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
-                >
-                  <span>Visit Site</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_transparent_0%,_black_100%)] opacity-40"></div>
+              {/* Animated Scanline for each card */}
+              <div className="scanline"></div>
             </div>
-          ))}
-        </div>
+
+            <div className="p-6">
+              <h3 className="font-pixel text-sm text-white mb-4 group-hover:text-blue-400">
+                {project.name}
+              </h3>
+              <p className="font-terminal text-lg text-slate-500 mb-6 h-12 overflow-hidden">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-1 bg-black border border-blue-900 text-blue-500 font-terminal text-xs"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-8bit w-full text-center py-2 px-0 !text-[8px]"
+              >
+                OPEN_SOURCE
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
 export default Portfolio
-

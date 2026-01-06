@@ -1,75 +1,73 @@
-import { Brain, Workflow, Users, Code, MessageSquare, Briefcase } from 'lucide-react'
-
 function Services() {
   const services = [
     {
-      icon: Brain,
-      name: 'AI Integration & Orchestration',
-      description: 'Seamless integration of AI technologies into existing enterprise systems. Strategic orchestration of AI workflows.',
+      title: 'AI ENGINE',
+      desc: 'Architecting proprietary neural networks and LLM implementations for enterprise-grade automation.',
+      icon: 'AI_CORE',
+      color: 'blue'
     },
     {
-      icon: Workflow,
-      name: 'Enterprise Automation (n8n)',
-      description: 'Custom automation workflows using n8n. Streamline business processes and reduce manual overhead.',
+      title: 'DOCK PLUS',
+      desc: 'Seamlessly docking AI agents into existing business workflows and cloud infrastructures.',
+      icon: 'DOCK_SYS',
+      color: 'purple'
     },
     {
-      icon: Users,
-      name: 'CRM Development & Integration',
-      description: 'Custom CRM solutions tailored to your business. Integration with existing tools and platforms.',
-    },
-    {
-      icon: Code,
-      name: 'Landing Pages & Web Development',
-      description: 'Professional web presence with optimized landing pages. Modern, responsive, and conversion-focused.',
-    },
-    {
-      icon: MessageSquare,
-      name: 'Marketing Automation (WhatsApp/Telegram)',
-      description: 'Automated marketing campaigns via messaging platforms. Engage customers through WhatsApp and Telegram.',
-    },
-    {
-      icon: Briefcase,
-      name: 'Business Strategy & Consulting',
-      description: 'Strategic guidance for business growth. Technology consulting aligned with your business objectives.',
-    },
+      title: 'BYTE BOT',
+      desc: 'Custom automation bots designed to handle repetitive tasks with pixel-perfect precision.',
+      icon: 'BOT_AUTO',
+      color: 'cyan'
+    }
   ]
 
   return (
-    <div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title */}
-        <h2 className="text-4xl font-semibold text-white mb-12">Core Services</h2>
+    <div className="section-container relative z-10">
+      <div className="text-center mb-20 animate-in fade-in zoom-in duration-700">
+        <h2 className="text-3xl md:text-5xl font-pixel mb-6 glow-text-blue">
+          CORE_MODULES
+        </h2>
+        <p className="font-terminal text-2xl text-blue-300/70 tracking-widest uppercase">
+          [ Advanced Technical Capabilities ]
+        </p>
+      </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service) => {
-            const Icon = service.icon
-            return (
-              <div
-                key={service.name}
-                className="bg-slate-900 border border-slate-800 p-6 hover:border-blue-600 transition-colors"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    <Icon className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-white font-semibold text-lg mb-2">
-                      {service.name}
-                    </h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 perspective-1000">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="group relative preserve-3d transition-all duration-500 hover:rotate-Y-12"
+          >
+            {/* 3D Card Effect */}
+            <div className="pixel-border-blue p-8 bg-slate-950/80 backdrop-blur-md relative z-10 hover:translate-z-10 transition-transform">
+              <div className="w-16 h-16 bg-blue-500/20 pixel-border-blue mb-6 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-black transition-colors">
+                <span className="font-pixel text-xl">{index + 1}</span>
               </div>
-            )
-          })}
-        </div>
+
+              <h3 className="text-xl font-pixel mb-4 text-white group-hover:text-blue-400">
+                {service.title}
+              </h3>
+
+              <p className="font-terminal text-lg text-slate-400 leading-relaxed mb-6">
+                {service.desc}
+              </p>
+
+              <div className="font-terminal text-xs text-blue-500/50 uppercase tracking-tighter">
+                &gt; Status: Operational
+              </div>
+            </div>
+
+            {/* Decorative 3D back elements */}
+            <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-blue-900/30 -z-10 group-hover:-bottom-6 group-hover:-right-6 transition-all"></div>
+          </div>
+        ))}
+      </div>
+
+      {/* Big Voxel Asset as Background Decoration */}
+      <div className="absolute -right-20 top-0 opacity-10 pointer-events-none scale-150 rotate-12">
+        <img src="/assets/voxel-icons.png" alt="Voxel Decoration" className="w-[600px]" />
       </div>
     </div>
   )
 }
 
 export default Services
-

@@ -1,147 +1,82 @@
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
 
-function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+const Navigation = () => {
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const menuItems = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Dock Plus AI', href: '#dockplus' },
-    { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Ventures', href: '#ventures' },
-    { label: 'Contact', href: '#contact' },
-  ]
-
-  // Scroll detection
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleGetStarted = () => {
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-    setIsMenuOpen(false)
-  }
-
-  const handleLinkClick = () => {
-    setIsMenuOpen(false)
-  }
+  const navLinks = [
+    { name: 'HOME', href: '#hero' },
+    { name: 'ABOUT', href: '#about' },
+    { name: 'CORE', href: '#services' },
+    { name: 'WORK', href: '#portfolio' },
+    { name: 'CONTACT', href: '#contact' },
+  ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 border-b border-slate-800 transition-all duration-300 ${
-      isScrolled ? 'bg-slate-950/95 backdrop-blur-sm' : 'bg-slate-900'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <a 
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-              setIsMenuOpen(false)
-            }}
-            className="flex-shrink-0 cursor-pointer"
-          >
-            <div className="text-white font-semibold text-lg tracking-tight">
-              THIAGAO A.I
-            </div>
-            <div className="text-slate-400 text-xs mt-0.5">
-              Enterprise AI Solutions
-            </div>
-          </a>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black/90 border-b-4 border-blue-500 py-2' : 'bg-transparent py-6'
+      }`}>
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        {/* Logo */}
+        <a href="#hero" className="flex items-center space-x-3 group">
+          <div className="w-8 h-8 bg-blue-500 pixel-border-blue animate-pulse group-hover:rotate-90 transition-transform"></div>
+          <span className="font-pixel text-lg text-white group-hover:text-blue-400 transition-colors">
+            THIAGAO.AI
+          </span>
+        </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
-            {menuItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={handleLinkClick}
-                className="text-slate-300 hover:text-blue-600 text-sm font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-            <button 
-              onClick={handleGetStarted}
-              className="ml-4 px-4 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="font-pixel text-[10px] text-slate-400 hover:text-blue-400 hover:glow-text-blue transition-all"
             >
-              Get Started
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-slate-300 hover:text-white p-2"
-            aria-label="Toggle menu"
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="btn-8bit !py-2 !px-4 !text-[8px]"
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+            CONNECT
+          </a>
         </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden text-blue-500"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? 'CLOSE' : 'MENU'}
+        </button>
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden fixed inset-y-0 right-0 w-64 bg-slate-900 border-l border-slate-800 z-50">
-          <div className="flex flex-col h-full">
-            <div className="p-6 border-b border-slate-800">
-              <div className="text-white font-semibold text-lg tracking-tight">
-                THIAGAO A.I
-              </div>
-              <div className="text-slate-400 text-xs mt-0.5">
-                Enterprise AI Solutions
-              </div>
-            </div>
-            <div className="flex-1 overflow-y-auto py-6">
-              {menuItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={handleLinkClick}
-                  className="block px-6 py-3 text-slate-300 hover:text-blue-600 hover:bg-slate-800 text-sm font-medium transition-colors"
-                >
-                  {item.label}
-                </a>
-              ))}
-              <div className="px-6 pt-4">
-                <button
-                  onClick={handleGetStarted}
-                  className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
-                >
-                  Get Started
-                </button>
-              </div>
-            </div>
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-black border-b-4 border-blue-500 p-6 absolute w-full left-0 animate-in slide-in-from-top-4">
+          <div className="flex flex-col space-y-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-pixel text-sm text-slate-300"
+              >
+                {link.name}
+              </a>
+            ))}
           </div>
         </div>
-      )}
-
-      {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={() => setIsMenuOpen(false)}
-        />
       )}
     </nav>
   )
 }
 
 export default Navigation
-
