@@ -6,10 +6,17 @@ import legacy from '@vitejs/plugin-legacy'
 export default defineConfig({
   plugins: [
     react(),
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-    }),
+    ...(process.env.NODE_ENV === 'production' ? [
+      legacy({
+        targets: ['defaults', 'not IE 11'],
+      })
+    ] : []),
   ],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: false,
+  },
   build: {
     target: 'esnext',
     minify: 'terser',
