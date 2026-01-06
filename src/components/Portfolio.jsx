@@ -15,7 +15,7 @@ function Portfolio() {
       tech: ['DESIGN', 'BRAND'],
     },
     {
-      name: 'THIAGAO_LANDSCAPE',
+      name: 'ROBERTS_LANDSCAPE',
       url: 'https://roberts-ldc.com',
       description: 'OUTDOOR_ARCHITECTURAL_SHOWCASE',
       tech: ['FULLSTACK', 'VISUAL'],
