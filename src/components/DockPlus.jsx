@@ -1,125 +1,96 @@
-import { Database, Workflow, MessageSquare, Link } from 'lucide-react'
+import { Terminal, Globe, Cpu, Layout, Share2, Code2, Gamepad2 } from 'lucide-react'
 
 function DockPlus() {
-  const solutions = [
+  const services = [
     {
-      icon: Database,
-      title: 'AI-Powered CRM Systems',
-      description: 'Custom CRM solutions enhanced with AI capabilities. Intelligent customer relationship management that adapts to your business needs and provides actionable insights.',
+      icon: Cpu,
+      title: 'AI_INTEGRATION',
+      tech: 'Python / LLMs / Agents',
+      desc: 'Building intelligent workflows and autonomous agents for enterprise efficiency.'
     },
     {
-      icon: Workflow,
-      title: 'Multi-Agent Automation',
-      description: 'Advanced automation systems using multiple AI agents working in coordination. Streamline complex workflows and reduce operational overhead across your organization.',
+      icon: Layout,
+      title: 'PREMIUM_SITES',
+      tech: 'React / Next.js / Vite',
+      desc: 'Architecting high-performance websites and landing pages with cutting-edge design.'
     },
     {
-      icon: MessageSquare,
-      title: 'Marketing Automation (WhatsApp/Telegram)',
-      description: 'Automated marketing campaigns delivered through messaging platforms. Engage customers directly via WhatsApp and Telegram with personalized, timely communications.',
+      icon: Share2,
+      title: 'MARKETING_AUTO',
+      tech: 'n8n / API / CRMs',
+      desc: 'Scaling communication via WhatsApp, Telegram, and automated email pipelines.'
     },
     {
-      icon: Link,
-      title: 'Enterprise Integration (n8n, APIs, Google Sheets)',
-      description: 'Seamless integration of enterprise systems and tools. Connect n8n workflows, APIs, and Google Sheets to create unified business processes.',
-    },
-  ]
-
-  const technologies = [
-    'ChatGPT',
-    'Claude',
-    'n8n',
-    'ManyChat',
-    'Supabase',
-    'Telegram API',
-    'GoHighLevel',
-    'Google Workspace',
-    'Cursor',
-    'Windsurf',
+      icon: Gamepad2,
+      title: 'GAME_DEV',
+      tech: 'Pixel Art / Canvas',
+      desc: 'Creating interactive digital experiences and gamified marketing solutions.'
+    }
   ]
 
   return (
-    <div>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4">
-            Dock Plus AI Solutions
+    <div className="section-container relative z-10 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[100px] rounded-full pointer-events-none"></div>
+
+      <div className="flex flex-col lg:flex-row gap-16 items-start">
+        {/* Left: Brand Identity */}
+        <div className="lg:w-1/3 space-y-8 sticky top-32">
+          <div className="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 text-blue-400 font-pixel text-[10px]">
+            CORE_FOCUS: DOCKPLUSAI.DEV
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-pixel text-white leading-tight">
+            DOCKPLUS <br />
+            <span className="text-blue-500">AI SOLUTIONS</span>
           </h2>
-          <p className="text-xl text-slate-400">
-            Enterprise automation and AI integration for modern businesses
+
+          <p className="font-terminal text-2xl text-slate-400 leading-relaxed">
+            We are operating at full speed in the AI world. DockPlus is a global hardware and software integration firm
+            specializing in automation and future-tech.
           </p>
-        </div>
 
-        {/* Overview */}
-        <div className="mb-16">
-          <div className="space-y-4 text-slate-300 leading-relaxed">
-            <p>
-              Dock Plus delivers enterprise-grade AI solutions and automation platforms designed to transform how modern businesses operate. We specialize in creating intelligent systems that integrate seamlessly with existing workflows, driving measurable results and operational excellence.
-            </p>
-            <p>
-              Our focus spans AI solutions, marketing automation, and enterprise integration, helping organizations leverage cutting-edge technology to achieve their strategic objectives. From AI-powered CRM systems to multi-agent automation workflows, we build solutions that deliver real business value.
-            </p>
-            <p>
-              With a proven track record of successful implementations, Dock Plus transforms businesses through intelligent automation, reducing manual overhead while increasing efficiency and customer engagement. Our solutions are built for scale, reliability, and long-term success.
-            </p>
+          <div className="flex items-center space-x-4 text-blue-500">
+            <Globe className="animate-spin-slow" />
+            <span className="font-terminal text-xl tracking-widest">GLOBAL_OPERATIONS_ACTIVE</span>
+          </div>
+
+          <div className="pt-8">
+            <a
+              href="https://dockplusai.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-8bit !bg-blue-600 !text-white"
+            >
+              VISIT_HQ_PORTAL
+            </a>
           </div>
         </div>
 
-        {/* Core Solutions */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-white mb-8">Core Solutions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {solutions.map((solution) => {
-              const Icon = solution.icon
-              return (
-                <div
-                  key={solution.title}
-                  className="bg-slate-900 border border-slate-800 p-6"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
-                      <Icon className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-semibold text-lg mb-3">
-                        {solution.title}
-                      </h4>
-                      <p className="text-slate-400 text-sm leading-relaxed">
-                        {solution.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Technology Stack */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-white mb-6">Technology Stack</h3>
-          <div className="flex flex-wrap gap-3">
-            {technologies.map((tech) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-slate-900 border border-slate-800 text-blue-600 text-sm font-medium"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Current Status */}
-        <div className="border-t border-slate-800 pt-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <div className="text-5xl font-bold text-blue-600 mb-2">12+</div>
-              <div className="text-slate-300 text-lg">Active Projects</div>
+        {/* Right: Technical Capabilities */}
+        <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((s, i) => (
+            <div key={i} className="pixel-border border-blue-900/20 bg-slate-950/50 p-6 hover:border-blue-500/50 transition-colors group">
+              <div className="w-12 h-12 bg-blue-900/20 border border-blue-500/30 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-black transition-all">
+                <s.icon size={24} />
+              </div>
+              <h3 className="font-pixel text-sm text-blue-400 mb-4">{s.title}</h3>
+              <p className="font-terminal text-lg text-slate-400 mb-6">{s.desc}</p>
+              <div className="font-terminal text-blue-500/40 text-sm border-t border-blue-900/10 pt-4">
+                STACK: {s.tech}
+              </div>
             </div>
-            <div>
-              <div className="text-lg font-semibold text-white mb-2">Industries Served</div>
-              <div className="text-slate-400">Construction, Hospitality, Tech</div>
+          ))}
+
+          {/* Specialization List */}
+          <div className="md:col-span-2 mt-8 p-8 border-2 border-blue-500/10 bg-blue-500/5">
+            <div className="font-pixel text-[8px] text-blue-500/50 mb-6 tracking-widest uppercase">DOMAIN_EXPERTISE</div>
+            <div className="flex flex-wrap gap-4">
+              {['AI_ENGINEERING', 'PYTHON_ARCH', 'UI/UX_GAMIFICATION', 'IT_AUTOMATION', 'LANDING_PAGES', 'MARKETING_SYSTEMS'].map(tag => (
+                <span key={tag} className="font-terminal text-xl text-slate-200 border-b border-blue-500/20">
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -129,4 +100,3 @@ function DockPlus() {
 }
 
 export default DockPlus
-

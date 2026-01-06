@@ -5,6 +5,8 @@ import Services from './components/Services'
 import Portfolio from './components/Portfolio'
 import Contact from './components/Contact'
 import PixelRun from './components/PixelRun'
+import DockPlus from './components/DockPlus'
+import Ventures from './components/Ventures'
 
 function App() {
   return (
@@ -24,8 +26,16 @@ function App() {
           <About />
         </section>
 
+        <section id="dockplus" className="py-32 bg-slate-950/20">
+          <DockPlus />
+        </section>
+
         <section id="services" className="py-32">
           <Services />
+        </section>
+
+        <section id="ventures" className="py-32 bg-slate-950/20">
+          <Ventures />
         </section>
 
         <section id="portfolio" className="py-32">

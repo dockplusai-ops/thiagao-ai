@@ -13,7 +13,9 @@ const Navigation = () => {
   const navLinks = [
     { name: 'HOME', href: '#hero' },
     { name: 'ABOUT', href: '#about' },
+    { name: 'DOCKPLUS', href: '#dockplus' },
     { name: 'CORE', href: '#services' },
+    { name: 'VENTURES', href: '#ventures' },
     { name: 'WORK', href: '#portfolio' },
     { name: 'CONTACT', href: '#contact' },
   ]

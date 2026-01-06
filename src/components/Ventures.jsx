@@ -1,84 +1,79 @@
 function Ventures() {
   const ventures = [
     {
-      name: 'Thiagao Landscape Construction & Design',
-      tagline: 'Rooted in Excellence',
-      industry: 'Landscape & Hardscape',
-      comingSoon: false,
-    },
-    {
-      name: 'Cheesebread Bakery Café',
-      tagline: 'Hyannis, MA',
-      industry: 'Food & Hospitality',
-      comingSoon: false,
+      name: 'DockPlus AI Solutions',
+      tagline: 'Enterprise Automation & AI Architecture',
+      industry: 'Technology',
+      focus: true,
+      description: 'Global reach, specialized in AI integration, custom software, and marketing automation.'
     },
     {
       name: 'Cape Codder Home Improvement',
-      tagline: 'Residential Construction & Remodeling',
+      tagline: 'Premium Residential Remodeling',
       industry: 'Construction',
-      comingSoon: false,
+      focus: false,
+      description: 'The standard for high-end home improvement in Cape Cod.'
+    },
+    {
+      name: 'Thiagao Landscape Construction',
+      tagline: 'Outdoor Architectural Excellence',
+      industry: 'Landscape & Hardscape',
+      focus: false,
+      description: 'Designing and building elite outdoor environments.'
     },
     {
       name: 'All Granite & Stone',
-      tagline: 'Marble, Granite & Quartz',
-      industry: 'Stone Fabrication',
-      comingSoon: false,
-    },
-    {
-      name: 'Bread & Roses Bookstore Café',
-      tagline: 'Culture & Community',
-      industry: 'Culture & Hospitality',
-      comingSoon: true,
-    },
-    {
-      name: 'DockPlus AI Solutions',
-      tagline: 'Enterprise Automation',
-      industry: 'Technology',
-      comingSoon: false,
-    },
+      tagline: 'Exotic Surfaces & Custom Fabrication',
+      industry: 'Stone Industry',
+      focus: false,
+      description: 'Quality stone fabrication and installation for luxury projects.'
+    }
   ]
 
   return (
-    <div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold text-white mb-4">Business Ventures</h2>
-          <p className="text-xl text-slate-400">
-            Building excellence across multiple industries
-          </p>
-        </div>
+    <div className="section-container relative z-10">
+      <div className="text-center mb-24">
+        <h2 className="text-4xl font-pixel text-white mb-6 glow-text-blue">BUSINESS_PORTFOLIO</h2>
+        <p className="font-terminal text-2xl text-slate-400">SELECT_VENTURES_&_ENTERPRISES</p>
+      </div>
 
-        {/* Ventures Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ventures.map((venture) => (
-            <div
-              key={venture.name}
-              className="bg-slate-900 border border-slate-800 p-6"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-white font-semibold text-lg pr-4">
-                  {venture.name}
-                </h3>
-                {venture.comingSoon && (
-                  <span className="px-2 py-1 bg-slate-700 text-slate-300 text-xs font-medium whitespace-nowrap">
-                    Coming Soon
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {ventures.map((venture) => (
+          <div
+            key={venture.name}
+            className={`pixel-border bg-black/40 p-8 group transition-all duration-500 ${venture.focus ? 'border-blue-500 shadow-[0_0_30px_rgba(0,242,255,0.1)]' : 'border-blue-900/40'
+              }`}
+          >
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                {venture.focus && (
+                  <span className="inline-block px-2 py-1 bg-blue-500 text-black font-pixel text-[8px] mb-4 animate-pulse">
+                    PRIORITY_FOCUS
                   </span>
                 )}
-              </div>
-              <p className="text-slate-400 text-sm mb-3">
-                {venture.tagline}
-              </p>
-              <div className="text-blue-600 text-sm font-medium">
-                {venture.industry}
+                <h3 className={`text-2xl font-pixel mb-2 ${venture.focus ? 'text-blue-400' : 'text-white'}`}>
+                  {venture.name}
+                </h3>
+                <div className="font-terminal text-blue-500/60 uppercase tracking-widest text-sm">
+                  {venture.industry}
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+
+            <p className="font-terminal text-xl text-slate-300 mb-8 leading-relaxed">
+              {venture.description}
+            </p>
+
+            <div className="pt-6 border-t border-blue-900/20">
+              <div className="font-terminal text-slate-500 text-sm">
+                &gt; {venture.tagline}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
 export default Ventures
-

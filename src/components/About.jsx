@@ -19,6 +19,8 @@ function About() {
               <p className="font-terminal text-2xl text-slate-300 leading-relaxed">
                 A veteran entrepreneur and technical architect with over two decades of experience in the digital frontier.
                 Based in Cape Cod, I specialize in bridging the gap between legacy systems and the autonomous future.
+                I am happily married to Bruna Cruz, and we are the proud parents of Noah, Nathan, and Ethan.
+                Our family is completed by our two loyal companions, Luke and Lucy.
               </p>
 
               <div className="grid grid-cols-2 gap-6 pt-6">
