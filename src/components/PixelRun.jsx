@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 const PixelRun = () => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [isJumping, setIsJumping] = useState(false)
-    const [score, setScore] = useState(0)
     const [obstaclesPassed, setObstaclesPassed] = useState(0)
     const [obstacles, setObstacles] = useState([])
     const [gameOver, setGameOver] = useState(false)
@@ -11,42 +10,43 @@ const PixelRun = () => {
 
     const requestRef = useRef()
     const lastTimeRef = useRef()
+    const velocityRef = useRef(0)
+    const playerYRef = useRef(120) // Use ref for logic, state for render
 
-    const GRAVITY = 0.5
-    const JUMP_FORCE = -10
+    const [renderPlayerY, setRenderPlayerY] = useState(120)
+
+    const GRAVITY = 0.4 // Adjusted for smoother jump
+    const JUMP_FORCE = -10 // Adjusted
     const GROUND_Y = 120
     const PLAYER_X = 50
-    const BASE_SPEED = 5
+    const BASE_SPEED = 3 // SLOWER START as requested
 
-    const [playerY, setPlayerY] = useState(GROUND_Y)
-    const [playerVelocity, setPlayerVelocity] = useState(0)
-
-    // Calculate speed based on obstacles passed: increase every 5
-    const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.8
+    const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.5
 
     const handleJump = () => {
         if (gameOver || gameWon) {
-            setGameOver(false)
-            setGameWon(false)
-            setIsPlaying(true)
-            setScore(0)
-            setObstaclesPassed(0)
-            setObstacles([])
-            setPlayerY(GROUND_Y)
+            resetGame()
             return
         }
         if (!isPlaying) {
             setIsPlaying(true)
-            setScore(0)
-            setObstaclesPassed(0)
-            setObstacles([])
-            setPlayerY(GROUND_Y)
             return
         }
         if (!isJumping) {
             setIsJumping(true)
-            setPlayerVelocity(JUMP_FORCE)
+            velocityRef.current = JUMP_FORCE
         }
+    }
+
+    const resetGame = () => {
+        setGameOver(false)
+        setGameWon(false)
+        setIsPlaying(true)
+        setObstaclesPassed(0)
+        setObstacles([])
+        velocityRef.current = 0
+        playerYRef.current = GROUND_Y
+        setRenderPlayerY(GROUND_Y)
     }
 
     useEffect(() => {
@@ -63,24 +63,21 @@ const PixelRun = () => {
     const gameLoop = (time) => {
         if (lastTimeRef.current !== undefined) {
             if (isPlaying && !gameOver && !gameWon) {
-                // Update Player
-                setPlayerY((prevY) => {
-                    const nextY = prevY + playerVelocity
-                    if (nextY >= GROUND_Y) {
-                        setIsJumping(false)
-                        setPlayerVelocity(0)
-                        return GROUND_Y
-                    }
-                    setPlayerVelocity((v) => v + GRAVITY)
-                    return nextY
-                })
+                // Update Player Logic
+                velocityRef.current += GRAVITY
+                playerYRef.current += velocityRef.current
+
+                if (playerYRef.current >= GROUND_Y) {
+                    playerYRef.current = GROUND_Y
+                    velocityRef.current = 0
+                    setIsJumping(false)
+                }
+                setRenderPlayerY(playerYRef.current)
 
                 // Update Obstacles
                 setObstacles((prev) => {
-                    const next = prev
-                        .map((obs) => ({ ...obs, x: obs.x - currentSpeed }))
+                    const next = prev.map((obs) => ({ ...obs, x: obs.x - currentSpeed }))
 
-                    // Count passed obstacles
                     const filtered = next.filter((obs) => {
                         if (obs.x <= PLAYER_X - 20 && !obs.passed) {
                             obs.passed = true
@@ -96,37 +93,40 @@ const PixelRun = () => {
                         return obs.x > -50
                     })
 
-                    // Spawn new obstacle
-                    const spawnInterval = Math.max(200, 400 - (obstaclesPassed * 2))
+                    // Spawn logic
+                    const spawnInterval = Math.max(250, 500 - (obstaclesPassed * 3))
                     if (filtered.length === 0 || (filtered[filtered.length - 1].x < spawnInterval && Math.random() < 0.05)) {
                         if (obstaclesPassed + filtered.length < 100) {
                             filtered.push({ x: 900, id: Date.now(), passed: false })
                         }
                     }
 
-                    // Collision Detection - Refined for better jumping
-                    // Character is roughly 30x40. Obstacle is 20x20.
-                    // When jumping, playerY decreases. 
-                    const playerBox = { x: PLAYER_X + 10, y: playerY, w: 20, h: 40 }
+                    // Collision (Small Hitbox for better feel)
+                    const playerHitbox = {
+                        x: PLAYER_X + 15,
+                        y: playerYRef.current + 10,
+                        w: 10,
+                        h: 25
+                    }
+
                     const collided = filtered.some((obs) => {
-                        const obsBox = { x: obs.x + 5, y: GROUND_Y + 10, w: 20, h: 20 }
+                        const obsHitbox = { x: obs.x + 8, y: GROUND_Y + 12, w: 14, h: 14 }
                         return (
-                            playerBox.x < obsBox.x + obsBox.w &&
-                            playerBox.x + playerBox.w > obsBox.x &&
-                            playerBox.y + playerBox.h > obsBox.y &&
-                            playerBox.y < obsBox.y + obsBox.h
+                            playerHitbox.x < obsHitbox.x + obsHitbox.w &&
+                            playerHitbox.x + playerHitbox.w > obsHitbox.x &&
+                            playerHitbox.y < obsHitbox.y + obsHitbox.h &&
+                            playerHitbox.y + playerHitbox.h > obsHitbox.y
                         )
                     })
 
                     if (collided) {
                         setGameOver(true)
                         setIsPlaying(false)
+                        velocityRef.current = 0
                     }
 
                     return filtered
                 })
-
-                setScore((prev) => prev + 1)
             }
         }
         lastTimeRef.current = time
@@ -136,26 +136,26 @@ const PixelRun = () => {
     useEffect(() => {
         requestRef.current = requestAnimationFrame(gameLoop)
         return () => cancelAnimationFrame(requestRef.current)
-    }, [isPlaying, playerVelocity, playerY, gameOver, gameWon, obstaclesPassed])
+    }, [isPlaying, gameOver, gameWon, obstaclesPassed])
 
     return (
         <div
-            className="w-full bg-slate-900/50 border-y border-blue-500/20 py-8 relative overflow-hidden group cursor-pointer"
-            onClick={handleJump}
+            className="w-full bg-slate-900/50 border-y border-blue-500/20 py-8 relative overflow-hidden group cursor-pointer select-none"
+            onMouseDown={(e) => { e.preventDefault(); handleJump(); }}
         >
             <div className="max-w-7xl mx-auto px-6 relative h-40">
-                {/* Game Title/UI */}
+                {/* UI */}
                 <div className="absolute top-0 left-6 z-20">
-                    <div className="font-pixel text-[8px] text-blue-500/50 mb-1">PROTO_RUNNER_V2.0</div>
+                    <div className="font-pixel text-[8px] text-blue-500/50 mb-1">PROTO_RUNNER_V2.1</div>
                     <div className="font-pixel text-xl text-blue-400">
-                        {obstaclesPassed}/100 | SPEED: {currentSpeed.toFixed(1)}
+                        {obstaclesPassed}/100 | SPD: {currentSpeed.toFixed(1)}
                     </div>
                 </div>
 
                 {!isPlaying && !gameOver && !gameWon && (
                     <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/40 backdrop-blur-sm">
                         <div className="text-center">
-                            <div className="font-pixel text-2xl text-white mb-4 animate-pulse">PRESS_SPACE_TO_START</div>
+                            <div className="font-pixel text-2xl text-white mb-4 animate-pulse">CLICK_OR_SPACE_TO_START</div>
                             <div className="font-terminal text-blue-500 text-sm opacity-60">MISSION: REACH 100 OBSTACLES</div>
                         </div>
                     </div>
@@ -164,9 +164,9 @@ const PixelRun = () => {
                 {gameOver && (
                     <div className="absolute inset-0 flex items-center justify-center z-30 bg-red-950/60 backdrop-blur-sm">
                         <div className="text-center">
-                            <div className="font-pixel text-2xl text-white mb-4">SYSTEM_FAILURE</div>
-                            <div className="font-pixel text-sm text-red-400 mb-6">SCORE: {obstaclesPassed}</div>
-                            <div className="font-pixel text-xs text-white animate-pulse">CLICK_TO_RETRY</div>
+                            <div className="font-pixel text-2xl text-white mb-4 uppercase">System Failed</div>
+                            <div className="font-pixel text-sm text-red-400 mb-6 uppercase">Obstacles: {obstaclesPassed}</div>
+                            <div className="font-pixel text-[10px] text-white animate-pulse">CLICK_TO_REBOOT</div>
                         </div>
                     </div>
                 )}
@@ -174,22 +174,21 @@ const PixelRun = () => {
                 {gameWon && (
                     <div className="absolute inset-0 flex items-center justify-center z-30 bg-blue-950/60 backdrop-blur-sm">
                         <div className="text-center">
-                            <div className="font-pixel text-2xl text-white mb-4">PROTOCOL_COMPLETE</div>
-                            <div className="font-pixel text-sm text-blue-400 mb-6">100/100 OBSTACLES CLEARED</div>
-                            <div className="font-pixel text-xs text-white animate-pulse">CHAMPION_OF_CODE</div>
+                            <div className="font-pixel text-2xl text-white mb-4 uppercase">Protocol Complete</div>
+                            <div className="font-pixel text-sm text-blue-400 mb-6 uppercase">100 Obstacles Cleared</div>
+                            <div className="font-pixel text-[10px] text-white animate-pulse">CHAMPION_OF_CODE</div>
                         </div>
                     </div>
                 )}
 
-                {/* Game Area */}
+                {/* World */}
                 <div className="relative h-full w-full border-b border-blue-500/30">
-                    {/* Ground Lines */}
                     <div className="absolute bottom-0 w-full h-px bg-blue-500/20"></div>
 
                     {/* Character */}
                     <div
                         style={{
-                            transform: `translate3d(${PLAYER_X}px, ${playerY}px, 0)`,
+                            transform: `translate3d(${PLAYER_X}px, ${renderPlayerY}px, 0)`,
                         }}
                         className="absolute"
                     >
@@ -207,7 +206,7 @@ const PixelRun = () => {
                         </div>
                     </div>
 
-                    {/* Obstacles */}
+                    {/* Entities */}
                     {obstacles.map((obs) => (
                         <div
                             key={obs.id}
@@ -215,14 +214,10 @@ const PixelRun = () => {
                             className="absolute"
                         >
                             <div className="w-8 h-8 bg-red-900/40 border border-red-500 flex items-center justify-center rotate-45">
-                                <span className="font-pixel text-[8px] text-red-500 -rotate-45">!</span>
+                                <span className="font-pixel text-[10px] text-red-500 -rotate-45 font-bold">!</span>
                             </div>
                         </div>
                     ))}
-
-                    {/* Decorative Background Elements */}
-                    <div className="absolute top-4 right-20 w-12 h-1 px-4 bg-blue-900/20"></div>
-                    <div className="absolute top-10 right-40 w-8 h-1 px-4 bg-blue-900/20"></div>
                 </div>
             </div>
         </div>
