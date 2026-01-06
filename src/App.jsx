@@ -4,6 +4,7 @@ import About from './components/About'
 import Services from './components/Services'
 import Portfolio from './components/Portfolio'
 import Contact from './components/Contact'
+import PixelRun from './components/PixelRun'
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
         <section id="contact" className="py-40">
           <Contact />
         </section>
+
+        <PixelRun />
       </main>
 
       <footer className="border-t-4 border-blue-900/40 py-16 bg-black relative overflow-hidden mt-32">

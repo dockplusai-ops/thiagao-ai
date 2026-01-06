@@ -22,13 +22,17 @@
     font-family: 'Space Mono', monospace;
   }
 
-  h1, h2, h3, .font-pixel {
+  h1,
+  h2,
+  h3,
+  .font-pixel {
     font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     letter-spacing: -0.05em;
   }
 
-  p, .font-terminal {
+  p,
+  .font-terminal {
     font-family: 'VT323', monospace;
     font-size: 1.25rem;
   }
@@ -60,7 +64,7 @@
   @apply relative;
   background: #000;
   border: 4px solid #fff;
-  box-shadow: 
+  box-shadow:
     4px 0 0 0 #fff,
     -4px 0 0 0 #fff,
     0 4px 0 0 #fff,
@@ -69,7 +73,7 @@
 
 .pixel-border-blue {
   border: 2px solid var(--neon-blue);
-  box-shadow: 
+  box-shadow:
     3px 0 0 0 var(--neon-blue),
     -3px 0 0 0 var(--neon-blue),
     0 3px 0 0 var(--neon-blue),
@@ -112,7 +116,7 @@
   text-decoration: none;
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
-  box-shadow: 
+  box-shadow:
     inset -4px -4px 0px 0px #00a8b3,
     4px 4px 0px 0px #000;
   transition: all 0.1s;
@@ -120,16 +124,24 @@
 }
 
 .btn-8bit:active {
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 0px 0px #00a8b3,
     0px 0px 0px 0px #000;
   transform: translate(4px, 4px);
 }
 
 @keyframes float {
-  0% { transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg); }
-  50% { transform: translateZ(50px) translateY(-15px) rotateX(20deg) rotateY(-10deg); }
-  100% { transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg); }
+  0% {
+    transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg);
+  }
+
+  50% {
+    transform: translateZ(50px) translateY(-15px) rotateX(20deg) rotateY(-10deg);
+  }
+
+  100% {
+    transform: translateZ(20px) translateY(0px) rotateX(25deg) rotateY(-15deg);
+  }
 }
 
 .float-3d {
@@ -149,20 +161,76 @@
 }
 
 @keyframes scanline {
-  0% { bottom: 100%; }
-  80% { bottom: 100%; }
-  100% { bottom: -100px; }
+  0% {
+    bottom: 100%;
+  }
+
+  80% {
+    bottom: 100%;
+  }
+
+  100% {
+    bottom: -100px;
+  }
 }
 
 #grid-bg {
   position: fixed;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   transform: perspective(500px) rotateX(60deg) translateY(-100px);
   transform-origin: top;
   z-index: -1;
-  mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+@keyframes bounce-short {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-bounce-short {
+  animation: bounce-short 0.4s ease-in-out infinite;
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+}
+
+/* Matrix surprise mode */
+.matrix-mode {
+  filter: brightness(0.8) contrast(1.2);
+  background-color: #000 !important;
+}
+
+.matrix-mode * {
+  color: #00ff41 !important;
+  border-color: #00ff41 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.5) !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.matrix-mode #grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #00ff41;
 }
