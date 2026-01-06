@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 const PixelRun = () => {
     const [isPlaying, setIsPlaying] = useState(false)
@@ -25,8 +25,7 @@ const PixelRun = () => {
 
     const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.5
 
-
-    const handleJump = () => {
+    const handleJump = useCallback(() => {
         if (gameOver || gameWon) {
             resetGame()
             return
@@ -39,9 +38,9 @@ const PixelRun = () => {
             setIsJumping(true)
             velocityRef.current = JUMP_FORCE
         }
-    }
+    }, [gameOver, gameWon, isPlaying, isJumping, resetGame])
 
-    const resetGame = () => {
+    const resetGame = useCallback(() => {
         setGameOver(false)
         setGameWon(false)
         setIsPlaying(true)
@@ -50,7 +49,7 @@ const PixelRun = () => {
         velocityRef.current = 0
         playerYRef.current = GROUND_Y
         setRenderPlayerY(GROUND_Y)
-    }
+    }, [])
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -61,7 +60,26 @@ const PixelRun = () => {
         }
         window.addEventListener('keydown', handleKeyDown)
         return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [isPlaying, isJumping, gameOver, gameWon])
+    }, [handleJump])
+
+    // Touch support for mobile
+    useEffect(() => {
+        const handleTouchStart = (e) => {
+            e.preventDefault()
+            handleJump()
+        }
+        
+        const container = containerRef.current
+        if (container) {
+            container.addEventListener('touchstart', handleTouchStart, { passive: false })
+        }
+        
+        return () => {
+            if (container) {
+                container.removeEventListener('touchstart', handleTouchStart)
+            }
+        }
+    }, [handleJump])
 
     const gameLoop = (time) => {
         if (!isVisible.current) {
@@ -171,23 +189,24 @@ const PixelRun = () => {
     return (
         <div
             ref={containerRef}
-            className="w-full bg-slate-900/50 border-y border-blue-500/20 py-8 relative overflow-hidden group cursor-pointer select-none"
+            className="w-full bg-slate-900/50 border-y border-blue-500/20 py-8 relative overflow-hidden group cursor-pointer select-none touch-none"
             onMouseDown={(e) => { e.preventDefault(); handleJump(); }}
-            style={{ contain: 'layout paint' }}
+            onTouchStart={(e) => { e.preventDefault(); handleJump(); }}
+            style={{ contain: 'layout paint', WebkitTouchCallout: 'none', userSelect: 'none' }}
         >
-            <div className="max-w-7xl mx-auto px-6 relative h-40">
-                <div className="absolute top-0 left-6 z-20">
-                    <div className="font-pixel text-[8px] text-blue-500/50 mb-1">PROTO_RUNNER_V2.1</div>
-                    <div className="font-pixel text-xl text-blue-400">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 relative h-40">
+                <div className="absolute top-0 left-4 md:left-6 z-20">
+                    <div className="font-pixel text-[6px] md:text-[8px] text-blue-500/50 mb-1">PROTO_RUNNER_V2.1</div>
+                    <div className="font-pixel text-sm md:text-xl text-blue-400">
                         {obstaclesPassed}/100 | SPD: {currentSpeed.toFixed(1)}
                     </div>
                 </div>
 
                 {!isPlaying && !gameOver && !gameWon && (
                     <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/40 backdrop-blur-sm">
-                        <div className="text-center">
-                            <div className="font-pixel text-2xl text-white mb-4 animate-pulse">CLICK_OR_SPACE_TO_START</div>
-                            <div className="font-terminal text-blue-500 text-sm opacity-60">MISSION: REACH 100 OBSTACLES</div>
+                        <div className="text-center px-4">
+                            <div className="font-pixel text-lg md:text-2xl text-white mb-4 animate-pulse">CLICK_OR_SPACE_TO_START</div>
+                            <div className="font-terminal text-blue-500 text-xs md:text-sm opacity-60">MISSION: REACH 100 OBSTACLES</div>
                         </div>
                     </div>
                 )}

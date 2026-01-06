@@ -22,16 +22,16 @@ function Services() {
 
   return (
     <div className="section-container relative z-10">
-      <div className="text-center mb-20 animate-in fade-in zoom-in duration-700">
-        <h2 className="text-3xl md:text-5xl font-pixel mb-6 glow-text-blue">
+      <div className="text-center mb-12 md:mb-20 animate-in fade-in zoom-in duration-700">
+        <h2 className="text-2xl md:text-3xl lg:text-5xl font-pixel mb-4 md:mb-6 glow-text-blue">
           CORE_MODULES
         </h2>
-        <p className="font-terminal text-2xl text-blue-300/70 tracking-widest uppercase">
+        <p className="font-terminal text-lg md:text-xl lg:text-2xl text-blue-300/70 tracking-widest uppercase px-4">
           [ Advanced Technical Capabilities ]
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 perspective-1000">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 perspective-1000">
         {services.map((service, index) => (
           <div
             key={index}
@@ -47,7 +47,7 @@ function Services() {
                 {service.title}
               </h3>
 
-              <p className="font-terminal text-lg text-slate-400 leading-relaxed mb-6">
+              <p className="font-terminal text-base md:text-lg text-slate-400 leading-relaxed mb-6">
                 {service.desc}
               </p>
 

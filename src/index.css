@@ -255,6 +255,19 @@
   animation: bounce-short 0.4s ease-in-out infinite;
 }
 
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
 .pixel-art {
   image-rendering: pixelated;
 }
@@ -285,4 +298,32 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #00ff41;
+}
+
+/* Section Container */
+.section-container {
+  @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .btn-8bit {
+    font-size: 8px;
+    padding: 10px 20px;
+  }
+  
+  .font-pixel {
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Smooth scroll behavior for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

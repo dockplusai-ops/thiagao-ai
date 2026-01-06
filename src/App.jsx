@@ -30,6 +30,13 @@ function App() {
       {/* Skip to main content for accessibility */}
       <a
         href="#main-content"
+        onClick={(e) => {
+          e.preventDefault()
+          const main = document.getElementById('main-content')
+          if (main) {
+            main.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }}
         className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-6 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-500 focus:text-black focus:font-pixel focus:text-sm"
         aria-label="Skip to main content"
       >
@@ -70,21 +77,21 @@ function App() {
         </Suspense>
       </main>
 
-      <footer className="border-t-4 border-blue-900/40 py-16 bg-black relative overflow-hidden mt-32" style={{ contain: 'layout' }}>
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          <div className="font-terminal text-slate-500 text-sm order-2 md:order-1">
+      <footer className="border-t-4 border-blue-900/40 py-12 md:py-16 bg-black relative overflow-hidden mt-24 md:mt-32" style={{ contain: 'layout' }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
+          <div className="font-terminal text-slate-500 text-xs md:text-sm order-2 md:order-1 text-center md:text-left">
             [ CPU_LOAD: 0.12 ] [ MEM_STATE: STABLE ]<br />
             &copy; 2024 THIAGAO_A.I // CAPE_COD_MA
           </div>
 
           <div className="flex flex-col items-center order-1 md:order-2">
             <div className="w-12 h-1 px-4 bg-blue-500 mb-4 animate-pulse"></div>
-            <div className="font-pixel text-[10px] text-blue-500">
+            <div className="font-pixel text-[8px] md:text-[10px] text-blue-500 text-center">
               8_BIT_DEVELOPER_EDITION
             </div>
           </div>
 
-          <div className="font-terminal text-slate-500 text-sm text-center md:text-right order-3">
+          <div className="font-terminal text-slate-500 text-xs md:text-sm text-center md:text-right order-3">
             UPLOADING_PROTOCOLS... [OK]<br />
             SYSTEM_STABILITY: 100%
           </div>

@@ -8,15 +8,15 @@ function About() {
 
   return (
     <div className="section-container relative z-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
 
         {/* Profile Stats Column */}
         <div className="order-2 lg:order-1">
           <div className="pixel-border bg-black/40 p-8 space-y-8">
-            <h2 className="text-2xl font-pixel text-blue-500 mb-8">FILE: THIAGAO_AI.DAT</h2>
+            <h2 className="text-xl md:text-2xl font-pixel text-blue-500 mb-6 md:mb-8">FILE: THIAGAO_AI.DAT</h2>
 
             <div className="space-y-6">
-              <p className="font-terminal text-2xl text-slate-300 leading-relaxed">
+              <p className="font-terminal text-lg md:text-xl lg:text-2xl text-slate-300 leading-relaxed">
                 A veteran entrepreneur and technical architect with over two decades of experience in the digital frontier.
                 Based in Cape Cod, I specialize in bridging the gap between legacy systems and the autonomous future.
                 I am happily married to Bruna Cruz, and we are the proud parents of Noah, Nathan, and Ethan.

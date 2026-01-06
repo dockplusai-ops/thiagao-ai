@@ -24,10 +24,10 @@ function Portfolio() {
 
   return (
     <div className="section-container relative z-10">
-      <div className="flex justify-between items-end mb-16 border-b-2 border-blue-900/40 pb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 border-b-2 border-blue-900/40 pb-6 md:pb-8 gap-4">
         <div>
-          <h2 className="text-3xl font-pixel text-white mb-2 glow-text-blue">WORK_ARCHIVE</h2>
-          <p className="font-terminal text-xl text-slate-400">SELECT_SUCCESSFUL_DEPLOYMENTS</p>
+          <h2 className="text-2xl md:text-3xl font-pixel text-white mb-2 glow-text-blue">WORK_ARCHIVE</h2>
+          <p className="font-terminal text-lg md:text-xl text-slate-400">SELECT_SUCCESSFUL_DEPLOYMENTS</p>
         </div>
         <div className="hidden md:block font-terminal text-blue-500/50 text-right">
           STORAGE: 74% FULL<br />
@@ -35,7 +35,7 @@ function Portfolio() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {projects.map((project, index) => (
           <div
             key={project.name}
@@ -55,7 +55,7 @@ function Portfolio() {
               <h3 className="font-pixel text-sm text-white mb-4 group-hover:text-blue-400">
                 {project.name}
               </h3>
-              <p className="font-terminal text-lg text-slate-500 mb-6 h-12 overflow-hidden">
+              <p className="font-terminal text-base md:text-lg text-slate-500 mb-6 min-h-[3rem] overflow-hidden">
                 {project.description}
               </p>
 

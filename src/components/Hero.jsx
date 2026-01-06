@@ -11,23 +11,23 @@ const Hero = memo(() => {
 
           {/* Left Content - Retro Terminal Style */}
           <div className="space-y-8 animate-in fade-in slide-in-from-left-10 duration-1000">
-            <div className="inline-block p-2 bg-blue-900/30 border-l-4 border-blue-500 text-blue-400 font-terminal text-xl tracking-widest">
+            <div className="inline-block p-2 bg-blue-900/30 border-l-4 border-blue-500 text-blue-400 font-terminal text-base md:text-xl tracking-widest">
               SYSTEM_STATUS: ONLINE
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel leading-tight glow-text-blue">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-pixel leading-tight glow-text-blue">
               THIAGAO <br />
               <span className="text-blue-500">AI</span>
             </h1>
 
             <div className="flex items-center space-x-4">
-              <div className="h-[2px] w-12 bg-blue-500/50"></div>
-              <div className="font-terminal text-2xl text-blue-300 tracking-[0.2em]">
+              <div className="h-[2px] w-8 md:w-12 bg-blue-500/50"></div>
+              <div className="font-terminal text-lg md:text-xl lg:text-2xl text-blue-300 tracking-[0.2em]">
                 LEAD_DEVELOPER_A.I
               </div>
             </div>
 
-            <p className="font-terminal text-xl md:text-2xl text-slate-400 max-w-xl leading-relaxed">
+            <p className="font-terminal text-lg md:text-xl lg:text-2xl text-slate-400 max-w-xl leading-relaxed">
               &gt; INITIALIZING CORE PROTOCOLS...<br />
               &gt; ARCHITECTING SCALABLE AI SOLUTIONS.<br />
               &gt; TRANSFORMING RAW DATA INTO INTELLIGENCE.
@@ -35,13 +35,14 @@ const Hero = memo(() => {
 
             <div className="pt-8">
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault()
                   const contactSection = document.getElementById('contact')
                   if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' })
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
                   }
                 }}
-                className="btn-8bit"
+                className="btn-8bit w-full md:w-auto"
                 aria-label="Navigate to contact section"
               >
                 INITIATE_CONTACT
@@ -78,7 +79,7 @@ const Hero = memo(() => {
             </div>
 
             {/* Terminal at bottom right of image */}
-            <div className="absolute -bottom-10 -right-4 w-full scale-90 opacity-80 hidden lg:block">
+            <div className="absolute -bottom-10 -right-4 w-full scale-90 opacity-80 hidden lg:block pointer-events-auto">
               <Terminal />
             </div>
           </div>

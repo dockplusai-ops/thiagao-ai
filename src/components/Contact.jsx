@@ -63,16 +63,16 @@ function Contact() {
   return (
     <div className="section-container relative z-10">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-pixel mb-6 glow-text-blue">
+        <div className="text-center mb-12 md:mb-16 px-4">
+          <h2 className="text-2xl md:text-3xl lg:text-5xl font-pixel mb-4 md:mb-6 glow-text-blue">
             TRANSMIT_SIGNAL
           </h2>
-          <p className="font-terminal text-2xl text-blue-300/70 tracking-widest">
+          <p className="font-terminal text-lg md:text-xl lg:text-2xl text-blue-300/70 tracking-widest">
             ESTABLISH_CONNECTION_WITH_CORE
           </p>
         </div>
 
-        <div className="pixel-border bg-black/60 p-8 md:p-12 relative overflow-hidden">
+        <div className="pixel-border bg-black/60 p-6 md:p-8 lg:p-12 relative overflow-hidden">
           {/* Background grid for form */}
           <div className="absolute inset-0 opacity-5 pointer-events-none"
             style={{ backgroundImage: 'radial-gradient(var(--neon-blue) 1px, transparent 0)', backgroundSize: '20px 20px' }}></div>
@@ -106,7 +106,7 @@ function Contact() {
                     value={formData.fullName}
                     className={`w-full bg-black border-2 ${
                       errors.fullName ? 'border-red-500' : 'border-slate-800'
-                    } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
+                    } text-blue-400 font-terminal text-lg md:text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
                     placeholder="ENTER_NAME"
                     onChange={(e) => {
                       setFormData({ ...formData, fullName: e.target.value })
@@ -137,7 +137,7 @@ function Contact() {
                     value={formData.email}
                     className={`w-full bg-black border-2 ${
                       errors.email ? 'border-red-500' : 'border-slate-800'
-                    } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
+                    } text-blue-400 font-terminal text-lg md:text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors`}
                     placeholder="ENTER_EMAIL"
                     onChange={(e) => {
                       setFormData({ ...formData, email: e.target.value })
@@ -170,7 +170,7 @@ function Contact() {
                   value={formData.message}
                   className={`w-full bg-black border-2 ${
                     errors.message ? 'border-red-500' : 'border-slate-800'
-                  } text-blue-400 font-terminal text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors resize-none`}
+                  } text-blue-400 font-terminal text-lg md:text-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors resize-none`}
                   placeholder="DESCRIBE_OBJECTIVES"
                   onChange={(e) => {
                     setFormData({ ...formData, message: e.target.value })

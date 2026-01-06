@@ -32,12 +32,12 @@ function Ventures() {
 
   return (
     <div className="section-container relative z-10">
-      <div className="text-center mb-24">
-        <h2 className="text-4xl font-pixel text-white mb-6 glow-text-blue">BUSINESS_PORTFOLIO</h2>
-        <p className="font-terminal text-2xl text-slate-400">SELECT_VENTURES_&_ENTERPRISES</p>
+      <div className="text-center mb-16 md:mb-24 px-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-pixel text-white mb-4 md:mb-6 glow-text-blue">BUSINESS_PORTFOLIO</h2>
+        <p className="font-terminal text-lg md:text-xl lg:text-2xl text-slate-400">SELECT_VENTURES_&_ENTERPRISES</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {ventures.map((venture) => (
           <div
             key={venture.name}
@@ -60,7 +60,7 @@ function Ventures() {
               </div>
             </div>
 
-            <p className="font-terminal text-xl text-slate-300 mb-8 leading-relaxed">
+            <p className="font-terminal text-lg md:text-xl text-slate-300 mb-6 md:mb-8 leading-relaxed">
               {venture.description}
             </p>
 

@@ -34,13 +34,21 @@ const Terminal = () => {
           break
         case 'contact':
           response = 'REDIRECTING_TO_COMMS_ARRAY...'
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+          setTimeout(() => {
+            const contactSection = document.getElementById('contact')
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+          }, 300)
           break
         case 'run_game':
           response = 'INITIALIZING_PROTO_RUNNER...'
           document.activeElement.blur()
           setTimeout(() => {
-            document.querySelector('.group.cursor-pointer')?.scrollIntoView({ behavior: 'smooth' })
+            const gameSection = document.querySelector('.group.cursor-pointer')
+            if (gameSection) {
+              gameSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }
           }, 500)
           break
         case 'matrix':
@@ -59,21 +67,21 @@ const Terminal = () => {
   }
 
   return (
-    <div className="pixel-border bg-black/90 p-4 font-terminal text-[#00ff41] text-sm opacity-95 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,65,0.1)]">
+    <div className="pixel-border bg-black/90 p-3 md:p-4 font-terminal text-[#00ff41] text-xs md:text-sm opacity-95 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,65,0.1)]">
       {/* Top Bar */}
-      <div className="flex items-center justify-between mb-3 border-b border-[#00ff41]/20 pb-2">
-        <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-[#ff5f56] rounded-full"></div>
-          <div className="w-2 h-2 bg-[#ffbd2e] rounded-full"></div>
-          <div className="w-2 h-2 bg-[#27c93f] rounded-full"></div>
+      <div className="flex items-center justify-between mb-2 md:mb-3 border-b border-[#00ff41]/20 pb-2">
+        <div className="flex items-center space-x-1.5 md:space-x-2">
+          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#ff5f56] rounded-full"></div>
+          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#ffbd2e] rounded-full"></div>
+          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#27c93f] rounded-full"></div>
         </div>
-        <span className="text-[8px] text-[#00ff41]/50 font-pixel">THIAGAO_v4.2_OS</span>
+        <span className="text-[6px] md:text-[8px] text-[#00ff41]/50 font-pixel">THIAGAO_v4.2_OS</span>
       </div>
 
       {/* Output Area */}
       <div
         ref={scrollRef}
-        className="h-40 overflow-y-auto mb-2 custom-scrollbar"
+        className="h-32 md:h-40 overflow-y-auto mb-2 custom-scrollbar"
       >
         {history.map((line, i) => (
           <div key={i} className="mb-1 leading-relaxed">
@@ -87,14 +95,15 @@ const Terminal = () => {
 
         {/* Input Line */}
         <div className="flex items-center text-[#00ff41]">
-          <span className="mr-2">root@thiagao-ai:~$</span>
+          <span className="mr-2 text-xs md:text-sm">root@thiagao-ai:~$</span>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleCommand}
-            className="bg-transparent border-none outline-none flex-1 font-terminal text-[#00ff41]"
+            className="bg-transparent border-none outline-none flex-1 font-terminal text-[#00ff41] text-xs md:text-sm"
             autoFocus
+            placeholder=""
           />
         </div>
       </div>
