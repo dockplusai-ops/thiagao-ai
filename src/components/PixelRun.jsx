@@ -137,14 +137,14 @@ const PixelRun = () => {
                         <div className={`relative ${isPlaying && !isJumping ? 'animate-bounce-short' : ''}`}>
                             <svg width="40" height="44" viewBox="0 0 40 44" className="fill-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
                                 {/* 8-bit Style Thiagao */}
-                                <rect x="12" y="8" width="16" height="16" className="fill-blue-400" /> {/* Head */}
-                                <rect x="12" y="2" width="16" height="6" fill="#1e3a8a" /> {/* Hair */}
+                                <rect x="12" y="8" width="16" height="16" fill="#d2b48c" /> {/* Head/Skin */}
+                                <rect x="12" y="2" width="16" height="6" fill="#4b3621" /> {/* Hair */}
                                 <rect x="14" y="14" width="4" height="2" fill="white" /> {/* Eye L */}
                                 <rect x="22" y="14" width="4" height="2" fill="white" /> {/* Eye R */}
-                                <rect x="16" y="20" width="8" height="2" fill="#1e3a8a" opacity="0.5" /> {/* Beard */}
-                                <rect x="8" y="24" width="24" height="12" className="fill-blue-600" /> {/* Body */}
-                                <rect x="10" y="36" width="6" height="8" className="fill-blue-800" /> {/* Leg L */}
-                                <rect x="24" y="36" width="6" height="8" className="fill-blue-800" /> {/* Leg R */}
+                                <rect x="16" y="20" width="8" height="2" fill="#4b3621" opacity="0.6" /> {/* Beard */}
+                                <rect x="8" y="24" width="24" height="12" fill="#1a1a1a" /> {/* Shirt */}
+                                <rect x="10" y="36" width="6" height="8" fill="#222" /> {/* Leg L */}
+                                <rect x="24" y="36" width="6" height="8" fill="#222" /> {/* Leg R */}
                             </svg>
                         </div>
                     </div>
