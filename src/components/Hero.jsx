@@ -56,7 +56,7 @@ function Hero() {
               <div className="pixel-border-blue glow-blue overflow-hidden relative group">
                 <img
                   src={photoUrl}
-                  alt="Thiago Pixel Art"
+                  alt="Thiagao Ai Pixel Art"
                   className="w-full h-auto max-w-md object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent pointer-events-none"></div>

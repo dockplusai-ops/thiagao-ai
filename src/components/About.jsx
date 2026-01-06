@@ -51,7 +51,7 @@ function About() {
             <div className="pixel-border-blue p-2 bg-slate-900 rotate-3 group-hover:rotate-0 transition-transform duration-500">
               <img
                 src="/assets/thiago-about.jpg"
-                alt="Thiago Portrait"
+                alt="Thiagao Ai Portrait"
                 className="w-full max-w-sm grayscale contrast-125 group-hover:grayscale-0 transition-all"
               />
             </div>
