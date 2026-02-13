@@ -25,6 +25,17 @@ const PixelRun = () => {
 
     const currentSpeed = BASE_SPEED + Math.floor(obstaclesPassed / 5) * 0.5
 
+    const resetGame = useCallback(() => {
+        setGameOver(false)
+        setGameWon(false)
+        setIsPlaying(true)
+        setObstaclesPassed(0)
+        setObstacles([])
+        velocityRef.current = 0
+        playerYRef.current = GROUND_Y
+        setRenderPlayerY(GROUND_Y)
+    }, [])
+
     const handleJump = useCallback(() => {
         if (gameOver || gameWon) {
             resetGame()
@@ -39,17 +50,6 @@ const PixelRun = () => {
             velocityRef.current = JUMP_FORCE
         }
     }, [gameOver, gameWon, isPlaying, isJumping, resetGame])
-
-    const resetGame = useCallback(() => {
-        setGameOver(false)
-        setGameWon(false)
-        setIsPlaying(true)
-        setObstaclesPassed(0)
-        setObstacles([])
-        velocityRef.current = 0
-        playerYRef.current = GROUND_Y
-        setRenderPlayerY(GROUND_Y)
-    }, [])
 
     useEffect(() => {
         const handleKeyDown = (e) => {
